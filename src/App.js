@@ -7,9 +7,13 @@ import Footer from "./Components/Footer/Footer";
 import SingleMovie from "./Components/SingleMovie/SingleMovie";
 import "./App.scss";
 import FavList from "./Components/FavList/FavList";
+import SettingsList from "./Components/SettingList/SettingList";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
+import { API, movieNumber } from "./CONSTS";
+import Login from "./Components/Login/Login";
 
+//funkcja losująca liczbę z zakresu od min do max
 const randMovieId = (min, max) => {
   min = parseInt(min, 10);
   max = parseInt(max, 10);
@@ -30,19 +34,29 @@ const App = () => {
   const [movie, setMovie] = useState(false);
   const [nextMovie, setNextMovie] = useState(false);
   const [favOpen, setFavOpen] = useState(false);
-
-  const API = "https://api.themoviedb.org/3/movie";
-
-  const movieNumber = 743869;
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [username, setUsername] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
 
   const handleFavOpen = () => {
     setFavOpen(!favOpen);
     console.log("fav click");
   };
 
+  const handleSettingsOpen = () => {
+    setSettingsOpen(!settingsOpen);
+    console.log("settings click");
+  };
+
   const handleNext = () => {
     setMovie(nextMovie);
     fetchMovie(setNextMovie);
+  };
+
+  const handleLogIn = (e) => {
+    e.preventDefault();
+    setIsLogged(!isLogged);
+    console.log("logIn clicked");
   };
 
   useEffect(() => {
@@ -100,8 +114,15 @@ const App = () => {
   return (
     <div className="body">
       <div className="container">
-        <Navigation handleFavOpen={handleFavOpen} />
+        <Navigation
+          handleFavOpen={handleFavOpen}
+          handleSettingsOpen={handleSettingsOpen}
+        />
         <FavList fav={fav} favOpen={favOpen} handleFavOpen={handleFavOpen} />
+        <SettingsList
+          settingsOpen={settingsOpen}
+          handleSettingsOpen={handleSettingsOpen}
+        />
         {movie === false ? (
           <div className="loader">
             <Loader type="TailSpin" color="grey" height={80} width={80} />
@@ -125,6 +146,7 @@ const App = () => {
       </div>
       {movies.length === 0 ? null : <Movies movies={movies} />} */}
         <Footer />
+        <Login isLogged={isLogged} handleLogIn={handleLogIn} />
       </div>
     </div>
   );

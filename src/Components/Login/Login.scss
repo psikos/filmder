@@ -1,0 +1,61 @@
+@import "../../variables";
+
+.form {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  border-radius: $border-radius;
+  overflow: hidden;
+  //   opacity: 85%;
+}
+
+.login {
+  //   background-color: magenta;
+  background-color: rgba(magenta, $alpha: 0.85);
+}
+
+.form-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+form {
+  background-color: pink;
+  padding: $padding * 3;
+  border-radius: 3px;
+  position: relative;
+
+  .logo {
+    font-family: "Gorditas", cursive;
+    color: white;
+    font-size: 0.7rem;
+    text-align: center;
+    position: absolute;
+    bottom: -1.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+input {
+  display: block;
+  margin: $padding / 3 0 $padding;
+  border: none;
+  outline: none;
+  padding: $padding / 2;
+}
+
+label {
+  font-size: 0.8rem;
+  margin-left: $padding / 2;
+}
+
+.logged {
+  display: none;
+}

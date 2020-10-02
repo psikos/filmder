@@ -3,10 +3,10 @@ import "./Navigation.scss";
 import heart from "./heart.png";
 import settings from "./settings.png";
 
-const Navigation = ({ handleFavOpen }) => {
+const Navigation = ({ handleFavOpen, handleSettingsOpen }) => {
   return (
     <nav className="nav-bar">
-      <div className="settings">
+      <div onClick={handleSettingsOpen} className="settings">
         <img src={settings} alt="" />
       </div>
       <h1 className="logo">filmder</h1>
