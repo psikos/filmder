@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SingleMovie.scss";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import heart from "../../assets/heart.png";
 
-const SingleMovie = ({ movie }) => {
+const SingleMovie = ({ movie, handleNext, handleAddToFav, nextMovie }) => {
   const { poster_path, title, overview, vote_average } = movie;
 
   return (
@@ -39,7 +40,8 @@ const SingleMovie = ({ movie }) => {
                   // pathTransition: 'none',
 
                   // Colors
-                  pathColor: `rgba(62, 152, 199, ${vote_average / 10})`,
+                  // pathColor: `rgba(62, 152, 199, ${vote_average / 10})`,
+                  pathColor: `rgba(62, 152, 199, 0.9)`,
                   textColor: "#f88",
                   trailColor: "#d6d6d6",
                   backgroundColor: "#3e98c7",
@@ -55,6 +57,12 @@ const SingleMovie = ({ movie }) => {
           ) : (
             <p className="single-movie-text">{overview} </p>
           )}
+        </div>
+        <div className="buttons">
+          <button onClick={handleNext}>NEXT</button>
+          <button onClick={handleAddToFav}>
+            <img src={heart} alt="Add to favourites!" />
+          </button>
         </div>
       </div>
     </div>

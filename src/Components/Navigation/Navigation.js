@@ -1,6 +1,6 @@
 import React from "react";
 import "./Navigation.scss";
-import heart from "./heart.png";
+import heart from "../../assets/heart.png";
 import settings from "./settings.png";
 
 const Navigation = ({ handleFavOpen, handleSettingsOpen }) => {

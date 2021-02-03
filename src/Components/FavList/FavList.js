@@ -1,6 +1,8 @@
 import React from "react";
 import "./FavList.scss";
 
+import SingleFav from "../SingleFav/SingleFav";
+
 const FavList = ({ fav, favOpen, handleFavOpen }) => {
   return (
     <div className={favOpen ? "fav-list fav-list-active " : "fav-list"}>
@@ -14,7 +16,7 @@ const FavList = ({ fav, favOpen, handleFavOpen }) => {
       ) : (
         <ul>
           {fav.map((elem) => {
-            return <li key={elem.id}>{elem.title}</li>;
+            return <SingleFav movieId={elem} key={elem} />;
           })}
         </ul>
       )}

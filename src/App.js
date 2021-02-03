@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { MOVIES_FETCH, MOVIES_FETCH_ERROR } from "./Actions";
+// import { MOVIES_FETCH, MOVIES_FETCH_ERROR } from "./Actions";
 import Navigation from "./Components/Navigation/Navigation";
-import Search from "./Components/Search";
-import Movies from "./Components/Movies";
+// import Search from "./Components/Search";
+// import Movies from "./Components/Movies";
 import Footer from "./Components/Footer/Footer";
 import SingleMovie from "./Components/SingleMovie/SingleMovie";
 import "./App.scss";
@@ -28,7 +28,7 @@ const randMovieId = (min, max) => {
 };
 
 const App = () => {
-  const [movies, setMovies] = useState([]);
+  // const [movies, setMovies] = useState([]);
   const [fav, setFav] = useState([]);
   const [error, setError] = useState(false);
   const [movie, setMovie] = useState(false);
@@ -36,7 +36,17 @@ const App = () => {
   const [favOpen, setFavOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [username, setUsername] = useState(false);
+  // const [password, setPassword] = useState(false);
+  const [userId, setUserId] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+  const [friends, setFriends] = useState([]);
+
+  const userLogin = (user, id, fav, friends) => {
+    setUsername(user);
+    setUserId(id);
+    setFav(fav);
+    setFriends(friends);
+  };
 
   const handleFavOpen = () => {
     setFavOpen(!favOpen);
@@ -53,14 +63,9 @@ const App = () => {
     fetchMovie(setNextMovie);
   };
 
-  const handleLogIn = (e) => {
-    e.preventDefault();
-    setIsLogged(!isLogged);
-    console.log("logIn clicked");
-  };
-
   useEffect(() => {
     fetchMovie(setMovie);
+    fetchMovie(setNextMovie);
   }, []);
 
   const fetchMovie = (movieToSet) => {
@@ -80,7 +85,7 @@ const App = () => {
           return fetchMovie(movieToSet);
         }
         movieToSet(data);
-        console.log(data);
+        // console.log(data);
       })
       .catch((error) => {
         console.log(error.message);
@@ -88,28 +93,90 @@ const App = () => {
   };
 
   const handleAddToFav = () => {
-    setFav([...fav, movie]);
+    setFav([...fav, movie.id]);
+
+    fetch(`https://msz-movies.herokuapp.com/api/users/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        movieId: movie.id,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
-  const dispatch = (action) => {
-    switch (action.type) {
-      case MOVIES_FETCH: {
-        setMovies(action.payload);
-        setError(false);
-        setMovie(false);
-        break;
-      }
-
-      case MOVIES_FETCH_ERROR: {
-        setMovies([]);
-        setError(action.payload);
-        break;
-      }
-
-      default:
-        console.warn("You should specify action type.");
-    }
+  const handleAddToFriends = (addedUser) => {
+    fetch(`https://msz-movies.herokuapp.com/api/users/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        friendId: `${addedUser}`,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("z dodania friendsa", data);
+        setFriends(...friends, data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
+
+  const handleRemoveFriend = (removedUser) => {
+    fetch(`https://msz-movies.herokuapp.com/api/users/${userId}/friends`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        friendId: `${removedUser}`,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("z usunięcia friendsa", data);
+        console.log("removedUser", removedUser);
+        // setFriends(
+        //   friends.filter((friend) => {
+        //     return (friend = removedUser);
+        //   })
+        // );
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  // const dispatch = (action) => {
+  //   switch (action.type) {
+  //     case MOVIES_FETCH: {
+  //       setMovies(action.payload);
+  //       setError(false);
+  //       setMovie(false);
+  //       break;
+  //     }
+
+  //     case MOVIES_FETCH_ERROR: {
+  //       setMovies([]);
+  //       setError(action.payload);
+  //       break;
+  //     }
+
+  //     default:
+  //       console.warn("You should specify action type.");
+  //   }
+  // };
 
   return (
     <div className="body">
@@ -122,13 +189,26 @@ const App = () => {
         <SettingsList
           settingsOpen={settingsOpen}
           handleSettingsOpen={handleSettingsOpen}
+          isLogged={isLogged}
+          userId={userId}
+          handleAddToFriends={handleAddToFriends}
+          handleRemoveFriend={handleRemoveFriend}
+          friends={friends}
         />
         {movie === false ? (
           <div className="loader">
             <Loader type="TailSpin" color="grey" height={80} width={80} />
           </div>
         ) : (
-          <SingleMovie movie={movie} key={movie.id} />
+          <>
+            <SingleMovie
+              movie={movie}
+              key={movie.id}
+              handleNext={handleNext}
+              handleAddToFav={handleAddToFav}
+              nextMovie={nextMovie}
+            />
+          </>
         )}
 
         {error !== false && (
@@ -137,16 +217,17 @@ const App = () => {
           </div>
         )}
 
-        <button onClick={handleNext}>NEXT</button>
-        <button onClick={handleAddToFav}>ADD TO FAV</button>
-
         {/* <div className="">
         <h3 className="">Znajdź swój ulubiony film!</h3>
         <Search dispatch={dispatch} />
       </div>
       {movies.length === 0 ? null : <Movies movies={movies} />} */}
         <Footer />
-        <Login isLogged={isLogged} handleLogIn={handleLogIn} />
+        <Login
+          isLogged={isLogged}
+          userLogin={userLogin}
+          setIsLogged={setIsLogged}
+        />
       </div>
     </div>
   );
