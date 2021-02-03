@@ -1,4 +1,13 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## filmder :heart:
+
+First you match with your friends then you looking for movie - if you like one hit the :heart: if your friend likes it too there is a MATCH :)
+
+Because there is still no registration avialible you can use Karols account.
+
+username: Karol
+password: Karol123
+
+:star: :star: :star: :star: :star:
 
 ## Available Scripts
 
