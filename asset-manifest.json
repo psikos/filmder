@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/filmder/static/css/main.e073ac00.chunk.css",
+    "main.js": "/filmder/static/js/main.79420a8b.chunk.js",
+    "main.js.map": "/filmder/static/js/main.79420a8b.chunk.js.map",
+    "runtime-main.js": "/filmder/static/js/runtime-main.ef3db426.js",
+    "runtime-main.js.map": "/filmder/static/js/runtime-main.ef3db426.js.map",
+    "static/css/2.a1074c3d.chunk.css": "/filmder/static/css/2.a1074c3d.chunk.css",
+    "static/js/2.e4fc5785.chunk.js": "/filmder/static/js/2.e4fc5785.chunk.js",
+    "static/js/2.e4fc5785.chunk.js.map": "/filmder/static/js/2.e4fc5785.chunk.js.map",
+    "index.html": "/filmder/index.html",
+    "precache-manifest.31b44d3a63b4f6ceb1a33b5d1ea66032.js": "/filmder/precache-manifest.31b44d3a63b4f6ceb1a33b5d1ea66032.js",
+    "service-worker.js": "/filmder/service-worker.js",
+    "static/css/2.a1074c3d.chunk.css.map": "/filmder/static/css/2.a1074c3d.chunk.css.map",
+    "static/css/main.e073ac00.chunk.css.map": "/filmder/static/css/main.e073ac00.chunk.css.map",
+    "static/js/2.e4fc5785.chunk.js.LICENSE.txt": "/filmder/static/js/2.e4fc5785.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ef3db426.js",
+    "static/css/2.a1074c3d.chunk.css",
+    "static/js/2.e4fc5785.chunk.js",
+    "static/css/main.e073ac00.chunk.css",
+    "static/js/main.79420a8b.chunk.js"
+  ]
+}
